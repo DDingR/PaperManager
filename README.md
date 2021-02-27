@@ -1,5 +1,6 @@
 # PaperManager
 
+<<<<<<< HEAD
 ## 개요
 
 # 구현하고 싶은 개요
@@ -29,3 +30,7 @@
 # 괜찮은 functions
 sheet2 = wb.create_sheet("2nd sheet")
 sheet1 = wb.active
+=======
+처음으로 써보느 건데 ㅎㅎ;;
+재밌넴
+>>>>>>> 4cc26b7e5daae7bd3162eedf797e43f88fe36310
