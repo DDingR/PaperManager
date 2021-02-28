@@ -10,21 +10,20 @@ from src.menu import *
 from src.functions import *
 
 def load_xlsx():
-    xlsx_name = input('불러올 파일을 입력하세요: ')
+    xlsx_name = input('\n불러올 파일을 입력하세요: ')
     try:
         wb = openpyxl.load_workbook(xlsx_name)
     except FileNotFoundError:
-        print("ERR// 파일이 존재하지 않습니다")
+        print('\033[31m' + 'ERR// 파일이 존재하지 않습니다' + '\033[0m')
         cmd = input('새로 만들겠습니까? (y/n): ')
         if cmd == 'y':
                 xlsx_name = input('파일명을 입력하세요: ')
                 wb = openpyxl.Workbook()
     except openpyxl.utils.exceptions.InvalidFileException:
-        print('ERR// 확장자가 잘못되었습니다')
-        load_xlsx()
+        print('\033[31m' + 'ERR// 확장자가 잘못되었습니다' + '\033[0m')
+        load_xlsx() # 여기서 에러 발생 # 밑의 return 문에서 발생하는듯
 
     return wb, xlsx_name
-
 
 def load_data(ws):
     # 데이터의 크기를 구하기 위함
@@ -37,26 +36,24 @@ def load_data(ws):
     for i in range(max_row):
         tmp = certainData()
 
-        tmp_keyWords = str(ws['B' + str(i + 1)].value)
-        print(type(tmp_keyWords))
-        tmp.paper_name = ws['A' + str(i + 1)].value
-        # 본래 list 로 나눌까 했는데 필요시에만 하면 될거같아
-        # tmp.keyWords = tmp_keyWords.split(', ')
-        tmp.keyWords = tmp_keyWords
-        tmp.author = ws['C' + str(i + 1)].value
-        tmp.date = ws['D' + str(i + 1)].value 
-        tmp.link = ws['E' + str(i + 1)].value
+        tmp.paper_name = ws['A' + str(i+1)].value
+        tmp.keyWords = str(ws['B' + str(i+1)].value)
+        tmp.author = ws['C' + str(i+1)].value
+        tmp.date = ws['D' + str(i+1)].value 
+        tmp.summary = ws['E' + str(i+1)].value
+        tmp.link = ws['F' + str(i+1)].value
         data.append(tmp) 
 
     return data
 
 def save_data(data, ws):
     for i in range(len(data)):
-        ws['A' + str(i + 1)] = data[i].paper_name
-        ws['B' + str(i + 1)] = data[i].keyWords
-        ws['C' + str(i + 1)] = data[i].author
-        ws['D' + str(i + 1)] = data[i].date
-        ws['E' + str(i + 1)] = data[i].link
+        ws['A' + str(i+1)] = data[i].paper_name
+        ws['B' + str(i+1)] = data[i].keyWords
+        ws['C' + str(i+1)] = data[i].author
+        ws['D' + str(i+1)] = data[i].date
+        ws['E' + str(i+1)] = data[i].summary
+        ws['F' + str(i+1)] = data[i].link
 
 if __name__ == "__main__":
     # load file
@@ -66,30 +63,33 @@ if __name__ == "__main__":
     #  data 로드
     data = []
     data = load_data(ws)
+    print('파일 및 데이터를 불러오기를 완료하였습니다\n')
 
     # 이제부터 실제 메뉴 display
     while(1): 
         display_menu()
         cmd = input('시작할 작업을 선택하세요: ')
+        print('\n')
 
         if cmd == '1':
-            print('논문 검색하기 시작')
+            print('=== 논문 검색하기 시작 ===')
             display_menu_search()
             cmd = input('무엇으로 검색하시겠습니까?: ')
             search(data, cmd)
 
         elif cmd == '2':
-            print('논문 수정하기 시작')
+            print('=== 논문 수정하기 시작 ===')
             display_menu_search()
             cmd = input('무엇으로 수정하겠습니까?: ')
             # edit(data[i], cmd)
-            print('ERR// 아직 구현 중')
+            print('\033[31m' + 'ERR// 아직 구현 중' + '\033[0m')
 
         elif cmd == '3':
-            print('\n저장된 전체 논문 조회')
+            print('=== 저장된 전체 논문 조회 ===')
             for i in range(len(data)):
                 display_certain_data(data[i], i)
-            print('전체 논문 조회 종료\n')
+            print('=== 전체 논문 조회 종료 ===\n')
+            input('계속하려면 아무키나 입력하세요...\n')
 
         elif cmd == '4':
             print('새로운 논문 저장')
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
         elif cmd == '6':
             print('논문 정렬하기')
-            print('ERR// 아직 구현 중')
+            print('\033[31m' + 'ERR// 아직 구현 중' + '\033[0m')
 
         elif cmd == '0':
             print('작업을 종료합니다')
@@ -126,6 +126,8 @@ if __name__ == "__main__":
                 print('프로그램 종료' + '\n')
 
             exit()
+        else:
+            print('\033[31m' + 'ERR// 잘못된 명령어입니다' + '\033[0m')
 
 
             

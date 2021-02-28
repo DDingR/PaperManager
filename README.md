@@ -9,7 +9,7 @@
 3. 
 
 # 각 셀에 저장할 paper 정보
-이름, 키워드, 저자, 날짜, pdf 링크
+이름, 키워드, 저자, 날짜, 요약, pdf 링크
 + 개인 요약 ## 이거는 제일 마지막에 구현하자
 
 # 메인 메뉴
@@ -30,7 +30,4 @@
 # 괜찮은 functions
 sheet2 = wb.create_sheet("2nd sheet")
 sheet1 = wb.active
-=======
-처음으로 써보느 건데 ㅎㅎ;;
-재밌넴
->>>>>>> 4cc26b7e5daae7bd3162eedf797e43f88fe36310
+tmp.keyWords = tmp_keyWords.split(', ')

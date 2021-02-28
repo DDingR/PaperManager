@@ -6,6 +6,7 @@ class certainData:
         self.keyWords = None
         self.author = None
         self.date = None
+        self.summary = None
         self.link = None
 
 # list 로 받아온 키워드를 문자열로 변환
@@ -16,8 +17,10 @@ def keyWords2string(keyWords):
     return string
 
 def search(data, cmd):
+    select_cmd = cmd
     what2search = input('검색어를 입력하세요: ')
-
+    print('\n')
+    print('=== 검색 시작 ===')
     result_num = []
     if cmd == '1':
         for i in range(len(data)):
@@ -39,8 +42,21 @@ def search(data, cmd):
             if what2search in str(data[i].date):
                 display_certain_data(data[i], i)
                 result_num.append(i)
+    elif cmd == '4':
+        for i in range(len(data)):
+            if what2search in str(data[i].date):
+                display_certain_data(data[i], i)
+                result_num.append(i)
+    elif cmd == '5':
+        for i in range(len(data)):
+            if what2search in str(data[i].summary):
+                display_certain_data(data[i], i)
+                result_num.append(i)
+    else:
+        print('ERR// 잘못된 명령어')
+        search(data, select_cmd)
 
-    print('검색 종료')
+    print('=== 검색 종료 ===')
 
 def edit(data, cmd):
     if cmd == '1':
@@ -59,6 +75,7 @@ def register():
     tmp.keyWords = input('입력할 키워드를 입력하세요 (각 키워드 사이 \', \' 입력 필수): ')
     tmp.author = input('등록할 논문의 저자의 이름을 입력하세요: ')
     tmp.date = int(input('등록할 논문이 게제된 년도를 입력하세요: '))
+    tmp.summary = input('논문의 내용을 요약해주세요: ')
     tmp.link = input('등록할 논문의 link 를 입력하세요: ')
     return tmp
 
